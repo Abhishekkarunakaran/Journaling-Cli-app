@@ -40,14 +40,61 @@ func commands() {
 				}
 			},
 		},
-		// {
-		// 	Name:    "write",
-		// 	Aliases: []string{"wr", "w", "edit"},
-		// 	Usage:   "To write or edit daily logs",
-		// 	Action: func(c *cli.Context) {
+		{
+			Name:    "write",
+			Aliases: []string{"wr", "w", "edit"},
+			Usage:   "To write or edit daily logs",
+			Action: func(c *cli.Context) {
+				if c.Args().First() != "" {
+					projectname = c.Args().First()
+				}
 
-		// 	},
-		// },
+				out, err := exec.Command("cmd", "/c", "powershell", "record", projectname).Output()
+
+				if err != nil {
+					fmt.Println("\"jrnl write\" not working")
+				} else {
+					fmt.Println(string(out))
+				}
+			},
+		},
+		{
+			Name:    "show",
+			Aliases: []string{"sh", "s"},
+			Usage:   "To to show the content of project directory",
+			Action: func(c *cli.Context) {
+				if c.Args().First() != "" {
+					projectname = c.Args().First()
+				}
+
+				out, err := exec.Command("cmd", "/c", "powershell", "show", projectname).Output()
+
+				if err != nil {
+					fmt.Println("\"jrnl show\" not working")
+				} else {
+					fmt.Println(string(out))
+				}
+			},
+		},
+		{
+			Name:    "log",
+			Aliases: []string{"lg", "l"},
+			Usage:   "To display the content of each markdown files",
+			Action: func(c *cli.Context) {
+				if c.Args().First() != "" {
+					projectname = c.Args().First()
+				}
+
+				out, err := exec.Command("cmd", "/c", "powershell", "log", projectname).Output()
+
+				if err != nil {
+					fmt.Println("\"jrnl log\" not working")
+				} else {
+					fmt.Println(string(out))
+				}
+				projectname = ""
+			},
+		},
 	}
 }
 
