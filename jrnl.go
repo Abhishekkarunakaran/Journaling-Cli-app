@@ -14,7 +14,7 @@ func info() {
 	app.Name = "Journeling CLI App"
 	app.Usage = "To automate the process of creating directory and daily log files, with the help of some custom written powershell scripts"
 	app.Author = "Abhishek K K - The Ronin"
-	app.Version = "1.0.0"
+	app.Version = "1.2.0"
 }
 
 func commands() {
