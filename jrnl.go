@@ -14,11 +14,13 @@ func info() {
 	app.Name = "Journeling CLI App"
 	app.Usage = "To automate the process of creating directory and daily log files, with the help of some custom written powershell scripts"
 	app.Author = "Abhishek K K - The Ronin"
-	app.Version = "1.2.0"
+	app.Version = "1.5.0"
 }
 
 func commands() {
 	var projectname string
+	var filename string
+	var flag string
 
 	app.Commands = []cli.Command{
 		{
@@ -92,7 +94,26 @@ func commands() {
 				} else {
 					fmt.Println(string(out))
 				}
-				projectname = ""
+			},
+		},
+		{
+			Name:    "open",
+			Aliases: []string{"op", "o"},
+			Usage:   "To display the content of each markdown files",
+			Action: func(c *cli.Context) {
+				if (c.Args().Get(0) != "") && (c.Args().Get(1) != "") && (c.Args().Get(2) != "") {
+					projectname = c.Args().Get(0)
+					filename = c.Args().Get(1)
+					flag = c.Args().Get(2)
+				}
+
+				out, err := exec.Command("cmd", "/c", "powershell", "open", projectname, filename, flag).Output()
+
+				if err != nil {
+					fmt.Println("\"jrnl open\" not working")
+				} else {
+					fmt.Println(string(out))
+				}
 			},
 		},
 	}
